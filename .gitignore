@@ -1,3 +1,10 @@
+# Config
+.config/
+.pip/
+.viminfo
+spark-1.4.1-bin-hadoop2.6.tgz
+spark-1.4.1-bin-hadoop2.6/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
