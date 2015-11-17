@@ -47,8 +47,13 @@ plt.savefig('img/pairwise_relations.png')
 
 def make_box_plot(col_name):
   sb.boxplot(x="churned", y=col_name, data=raw_data)
-  plt.savefig("img/boxplots/" + col_name + ".png")
+  plt.savefig("img/boxplot/" + col_name + ".png")
   plt.clf()
   
+def make_violin_plot(col_name):
+  sb.violinplot(x="churned", y=col_name, data = raw_data)
+  plt.savefig("img/violinplot/" +  col_name + ".png")
+  plt.clf()
 
 [make_box_plot(col) for col in continuousish_cols]
+[make_violin_plot(col) for col in continuousish_cols]

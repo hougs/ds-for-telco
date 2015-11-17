@@ -30,11 +30,34 @@ number customer service calls: continuous.
 
 from pyspark.sql import SQLContext
 from pyspark.sql.types import *
+from pyspark import SparkContext
 
+
+sc = SparkContext()
 sqlContext = SQLContext(sc)
-schema = StructType([     StructField("state", StringType(), True),     StructField("account_length", DoubleType(), True),     StructField("area_code", StringType(), True),     StructField("phone_number", StringType(), True),     StructField("international_plan", StringType(), True),     StructField("voice_mail_plan", StringType(), True),     StructField("number_vmail_messages", DoubleType(), True),     StructField("total_day_minutes", DoubleType(), True),     StructField("total_day_calls", DoubleType(), True),     StructField("total_day_charge", DoubleType(), True),     StructField("total_eve_minutes", DoubleType(), True),     StructField("total_eve_calls", DoubleType(), True),     StructField("total_eve_charge", DoubleType(), True),     StructField("total_night_minutes", DoubleType(), True),     StructField("total_night_calls", DoubleType(), True),     StructField("total_night_charge", DoubleType(), True),     StructField("total_intl_minutes", DoubleType(), True),     StructField("total_intl_calls", DoubleType(), True),     StructField("total_intl_charge", DoubleType(), True),     StructField("number_customer_service_calls", DoubleType(), True),     StructField("churned", StringType(), True)])
+schema = StructType([StructField("state", StringType(), True),
+                     StructField("account_length", DoubleType(), True),
+                     StructField("area_code", StringType(), True),
+                     StructField("phone_number", StringType(), True),
+                     StructField("international_plan", StringType(), True),
+                     StructField("voice_mail_plan", StringType(), True),
+                     StructField("number_vmail_messages", DoubleType(), True),
+                     StructField("total_day_minutes", DoubleType(), True),
+                     StructField("total_day_calls", DoubleType(), True),
+                     StructField("total_day_charge", DoubleType(), True),
+                     StructField("total_eve_minutes", DoubleType(), True),
+                     StructField("total_eve_calls", DoubleType(), True),
+                     StructField("total_eve_charge", DoubleType(), True),
+                     StructField("total_night_minutes", DoubleType(), True),
+                     StructField("total_night_calls", DoubleType(), True),
+                     StructField("total_night_charge", DoubleType(), True),
+                     StructField("total_intl_minutes", DoubleType(), True),
+                     StructField("total_intl_calls", DoubleType(), True),
+                     StructField("total_intl_charge", DoubleType(), True),
+                     StructField("number_customer_service_calls", DoubleType(), True),
+                     StructField("churned", StringType(), True)])
 
-df = sqlContext.read     .format('com.databricks.spark.csv')     .load('churn.all', schema = schema)
+df = sqlContext.read.format('com.databricks.spark.csv').load('churn.all', schema = schema)
 df.take(5)
 
 # Assemble feature vectors
@@ -53,15 +76,10 @@ assembler = VectorAssembler(
     outputCol = 'features')
 
 # Transform labels
-
-
 from pyspark.ml.feature import StringIndexer
 
 label_indexer = StringIndexer(inputCol = 'churned', outputCol = 'label')
-
 # Fit the model
-
-
 from pyspark.ml import Pipeline
 from pyspark.ml.classification import RandomForestClassifier
 
